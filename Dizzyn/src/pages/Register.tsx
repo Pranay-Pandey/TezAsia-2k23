@@ -30,7 +30,8 @@ import { addPatient } from "../utils/operation";
 const { toast, ToastContainer } = createStandaloneToast();
 
 export default function SignupCard() {
-  const BASEURL = import.meta.env.VITE_API_URL;
+  const BASEURL = "https://efficacious-writing-production.up.railway.app/api";
+  // const BASEURL = import.meta.env.VITE_API_URL;
   const [registered, setRegistered] = useState(false);
   const [msg, setMsg] = useState("");
   const [form, setForm] = useState({

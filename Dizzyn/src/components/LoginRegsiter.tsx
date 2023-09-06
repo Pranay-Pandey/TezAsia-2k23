@@ -3,7 +3,8 @@ import {addPatient} from '../utils/operation';
 import axios from "axios";
 
 const LoginRegister = (props)=>{
-    const BASEURL = import.meta.env.VITE_API_URL;
+  const BASEURL = "https://efficacious-writing-production.up.railway.app/api";
+  // const BASEURL = import.meta.env.VITE_API_URL;
     let form = props.form;
     let setForm = props.setForm;
 

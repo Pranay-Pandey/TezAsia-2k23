@@ -6,7 +6,8 @@ import { useSessionStorage } from '../utils/useSessionStorage';
 import { updateDiagnosis } from '../utils/operation';
 
 const EditDiagnosis = ({user, diag}) => {
-    const BASEURL = import.meta.env.VITE_API_URL;
+    const BASEURL = "https://efficacious-writing-production.up.railway.app/api";
+    // const BASEURL = import.meta.env.VITE_API_URL;
     const [doctor, setDoctor] = useSessionStorage("user", JSON.stringify({}));
     const Doctor = JSON.parse(doctor);
     const [form,setForm]=useState({

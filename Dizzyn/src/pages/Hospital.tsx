@@ -3,7 +3,8 @@ import axios from 'axios';
 import Card from '../components/Card';
 
 const HospitalInfo = () => {
-  const BASEURL = import.meta.env.VITE_API_URL;
+  const BASEURL = "https://efficacious-writing-production.up.railway.app/api";
+  // const BASEURL = import.meta.env.VITE_API_URL;
   const [hospitalData, setHospitalData] = useState([]);
 
   useEffect(() => {

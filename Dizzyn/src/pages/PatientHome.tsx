@@ -11,7 +11,8 @@ import Card from "../components/Card";
 import { controlVisibility } from '../utils/operation'
 
 const PatientHome = () => {
-  const BASEURL = import.meta.env.VITE_API_URL;
+  const BASEURL = "https://efficacious-writing-production.up.railway.app/api";
+  // const BASEURL = import.meta.env.VITE_API_URL;
   const [searchFilter, setSearchFilter] = useState('doctorName'); // Default filter
   const [searchQuery, setSearchQuery] = useState('');
   const [data, setData] = useState([]);

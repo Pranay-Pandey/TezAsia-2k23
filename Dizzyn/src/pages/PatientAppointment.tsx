@@ -26,7 +26,8 @@ import { useSessionStorage } from '../utils/useSessionStorage';
 const { toast, ToastContainer } = createStandaloneToast();
 
 export default function PatientAppointment() {
-    const BASEURL = import.meta.env.VITE_API_URL;
+    const BASEURL = "https://efficacious-writing-production.up.railway.app/api";
+    // const BASEURL = import.meta.env.VITE_API_URL;
     const [user, setUser] = useSessionStorage('user', JSON.stringify({}));
     const thisuser = JSON.parse(user);
     const [mock, setMock] = useState([])

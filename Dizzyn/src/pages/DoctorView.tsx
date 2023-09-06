@@ -30,7 +30,8 @@ interface IItem {
 }
 
 export default function DoctorView() {
-  const BASEURL = import.meta.env.VITE_API_URL;
+  const BASEURL = "https://efficacious-writing-production.up.railway.app/api";
+  // const BASEURL = import.meta.env.VITE_API_URL;
   
 
   const [user, setUser] = useSessionStorage("user", JSON.stringify({}));
