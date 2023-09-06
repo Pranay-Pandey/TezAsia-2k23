@@ -46,7 +46,7 @@ const App: React.FC = () => {
   return (
     <div className="h-100">
       <Navbar />
-      {/*<Chatbot />*/}
+      <Chatbot />
       {loggedIn && login==="true" && token.length && (User as any).speciality===undefined &&<NewSidebar /> }
       <Routes>
         <Route path="/register" element={<RegistrationForm />} />

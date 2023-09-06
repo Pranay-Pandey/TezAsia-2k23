@@ -1,34 +1,22 @@
+import React, { useState } from 'react'; // Added React import
 
-import { useState } from 'react'
 import '@chatscope/chat-ui-kit-styles/dist/default/styles.min.css';
 import {
     Avatar, ConversationHeader, MainContainer, ChatContainer,
     MessageList, Message, MessageInput, TypingIndicator, MessageSeparator
-}
-    from '@chatscope/chat-ui-kit-react';
+} from '@chatscope/chat-ui-kit-react';
 
+const API_KEY = import.meta.env.VITE_API_KEY;
 
-const API_KEY = process.env.API_URL;
-console.log("API_KEY = ", API_KEY)
-
-
-// "Explain things like you would to a 10 year old learning how to code."
-const systemMessage = { //  Explain things like you're talking to a software professional with 5 years of experience.
+const systemMessage = {
     "role": "system", "content": `Explain things like you would
 be a health professional with 5 years of experience and can help emotionally and mentally to 
 people of all ages. Do not answer any questions strictly which include anything other than health.`
 }
 
 function Chatbot() {
-    const [messages, setMessages] = useState<{
-        message: any;
-        direction: string;
-        sender: string;
-    }|{
-        message: string;
-        sentTime: string;
-        sender: string;
-    }[]>([
+    const [collapsed, setCollapsed] = useState(true);
+    const [messages, setMessages] = useState([
         {
             message: "Hello, I'm your health guide! Ask me anything!",
             sentTime: "just now",
@@ -37,6 +25,10 @@ function Chatbot() {
     ]);
     const [isTyping, setIsTyping] = useState(false);
 
+    const toggleChatbot = () => {
+        setCollapsed(!collapsed);
+    };
+
     const handleSend = async (message) => {
         const newMessage = {
             message,
@@ -44,12 +36,10 @@ function Chatbot() {
             sender: "user"
         };
 
-        const newMessages = [...messages as any, newMessage];
+        const newMessages = [...messages, newMessage];
 
-        setMessages(newMessages);
+        setMessages(newMessages as any);
 
-        // Initial system message to determine ChatGPT functionality
-        // How it responds, how it talks, etc.
         setIsTyping(true);
         await processMessageToChatGPT(newMessages);
     };
@@ -103,45 +93,93 @@ function Chatbot() {
     }
 
     return (
-        <div style={{position:'fixed',bottom:'50px',right:'50px',zIndex:10}}>
-            <div 
-            style={{ position: "relative", height: "400px", width: "400px" }}
-            >
-
-                <MainContainer responsive>
-                    <ChatContainer>
-                        <ConversationHeader>
-                            {/* <Avatar src={botImage} name="Eliot" status='available' /> */}
-                            <ConversationHeader.Content>
-                                <span style={{
-                                    color: "#00008b",
-                                    position: "relative",
-                                    right: 20,
-                                    fontWeight: 600,
-                                    textAlign: 'center'
-                                }}>&nbsp; &nbsp;Health-Assistance Bot</span>
-                            </ConversationHeader.Content>
-                        </ConversationHeader>
-                        <MessageList
-                            scrollBehavior="smooth"
-                            typingIndicator={isTyping ? <TypingIndicator content="Chatbot is typing" /> : null}
-                        >
-                            {(messages as any).map((message, i) => {
-                                console.log(message)
-                                return (<><Message key={i} model={message}>
-                                    {/* {message.sender === "ChatGPT" ? <Avatar src={botImage} name="Eliot" /> : <Avatar src={boyImage} name="user" size="sm" />} */}
-                                </Message>
-                                    <MessageSeparator />
-                                </>
-                                )
-                            })}
-                        </MessageList>
-                        <MessageInput attachButton={false} placeholder="Type query here" onSend={handleSend} />
-                    </ChatContainer>
-                </MainContainer>
-            </div>
+        <div style={{ zIndex: 10 }}>
+            {collapsed ? (
+                <div
+                    style={{
+                        position: 'fixed',
+                        bottom: '20px',
+                        right: '20px',
+                        cursor: 'pointer',
+                    }}
+                    onClick={toggleChatbot}
+                >
+                    <div
+                        style={{
+                            backgroundColor: '#00008b',
+                            color: 'white',
+                            width: '50px',
+                            height: '50px',
+                            borderRadius: '50%',
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                        }}
+                    >
+                        <span>Chat</span>
+                    </div>
+                </div>
+            ) : (
+                <div
+                    style={{
+                        position: 'fixed',
+                        bottom: '50px',
+                        right: '50px',
+                    }}
+                >
+                    <div
+                        style={{
+                            position: 'relative',
+                            height: '400px',
+                            width: '400px',
+                        }}
+                    >
+                        <MainContainer responsive>
+                            <ChatContainer>
+                                <ConversationHeader>
+                                    <ConversationHeader.Content>
+                                        <span
+                                            style={{
+                                                color: "#00008b",
+                                                fontWeight: 600,
+                                                textAlign: 'center',
+                                                display: 'inline-block',
+                                            }}
+                                        >
+                                            &nbsp; &nbsp;Health-Assistance Bot
+                                        
+                                        <span
+                                            style={{
+                                                cursor: 'pointer',
+                                                float: 'right',
+                                                color: 'red', // You can adjust the color as needed
+                                            }}
+                                            onClick={toggleChatbot}
+                                        >
+                                            X
+                                        </span>
+                                        </span>
+                                    </ConversationHeader.Content>
+                                </ConversationHeader>
+                                <MessageList
+                                    scrollBehavior="smooth"
+                                    typingIndicator={isTyping ? <TypingIndicator content="Chatbot is typing" /> : null}
+                                >
+                                    {messages.map((message, i) => (
+                                        <React.Fragment key={i}>
+                                            <Message model={message as any} />
+                                            <MessageSeparator />
+                                        </React.Fragment>
+                                    ))}
+                                </MessageList>
+                                <MessageInput attachButton={false} placeholder="Type query here" onSend={handleSend} />
+                            </ChatContainer>
+                        </MainContainer>
+                    </div>
+                </div>
+            )}
         </div>
-    )
+    );
 }
 
 export default Chatbot;
