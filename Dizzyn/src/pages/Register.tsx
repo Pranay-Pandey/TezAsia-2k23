@@ -30,6 +30,7 @@ import { addPatient } from "../utils/operation";
 const { toast, ToastContainer } = createStandaloneToast();
 
 export default function SignupCard() {
+  const BASEURL = import.meta.env.VITE_API_URL;
   const [registered, setRegistered] = useState(false);
   const [msg, setMsg] = useState("");
   const [form, setForm] = useState({
@@ -52,7 +53,7 @@ export default function SignupCard() {
     let config = {
       method: "post",
       maxBodyLength: Infinity,
-      url: "https://efficacious-writing-production.up.railway.app/api/register",
+      url: BASEURL+"/register",
       headers: {
         "Content-Type": "application/json",
       },

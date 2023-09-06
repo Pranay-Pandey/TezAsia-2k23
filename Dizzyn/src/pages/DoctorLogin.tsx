@@ -22,8 +22,10 @@ import { useNavigate } from 'react-router-dom';
 const { toast, ToastContainer } = createStandaloneToast();
 
 export default function SignupCard() {
+    const BASEURL = import.meta.env.VITE_API_URL;
     const [form, setForm] = useState({
         aadhar: '',
+        privateKey: ''
     })
 
     const [loading, setLoading] = useState(false);
@@ -42,14 +44,14 @@ export default function SignupCard() {
     const handleSubmit = async () =>{
         console.log('handleSubmit called');
         
-        const response = await axios.post("https://efficacious-writing-production.up.railway.app/api/doctorlogin", {
+        const response = await axios.post(BASEURL+"/doctorlogin", {
             aadhar: form.aadhar,
             });
       
             console.log(response.data)
             const {message, user, token} = response.data;
-
-            setUser(JSON.stringify(user))
+            let privateKey = form.privateKey.replace(/\\n/g, '\n');
+            setUser(JSON.stringify({...user, privateKey}))
             setLogin('true')
             setToken(token)
             navigate('/doctor_view')
@@ -89,6 +91,13 @@ export default function SignupCard() {
                                         <FormLabel>Aadhar Card Number</FormLabel>
                                         <Input type="text" onChange={(e) => {
                                             setForm(prev => ({ ...prev, aadhar: e.target.value }))
+                                        }} />
+                                    </FormControl>
+
+                                    <FormControl id="privatekey" isRequired>
+                                        <FormLabel>Paste your Private Key</FormLabel>
+                                        <Input type="text" onChange={(e) => {
+                                            setForm(prev => ({ ...prev, privateKey: e.target.value }))
                                         }} />
                                     </FormControl>
 

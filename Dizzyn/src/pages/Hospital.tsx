@@ -3,13 +3,14 @@ import axios from 'axios';
 import Card from '../components/Card';
 
 const HospitalInfo = () => {
+  const BASEURL = import.meta.env.VITE_API_URL;
   const [hospitalData, setHospitalData] = useState([]);
 
   useEffect(() => {
     // Fetch hospital and doctor data from the API
     const fetchHospitalData = async () => {
       try {
-        const response = await axios.get("https://efficacious-writing-production.up.railway.app/api/getHospital");
+        const response = await axios.get(BASEURL+"/getHospital");
         setHospitalData(response.data.data);
       } catch (error) {
         console.error("Error fetching hospital data:", error);

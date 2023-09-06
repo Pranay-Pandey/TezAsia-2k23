@@ -142,8 +142,10 @@ router.post("/login", async (req, res) => {
             let age = decipher3.update(storageObj.patient_info[AadharHash].age, 'hex', 'utf-8');
             age += decipher3.final('utf-8');
 
+            let privateKey = req.body.privateKey;
+
             const payload = {
-                name,age,sex
+                name,age,sex, privateKey
             }
 
             const options = {
@@ -169,6 +171,11 @@ router.post("/login", async (req, res) => {
                 input: req.body
             })
         }
+    }
+    else{
+        return res.status(400).json({
+            message: "Not Found"
+        })
     }
 }
 })
@@ -549,6 +556,11 @@ router.post("/getDoctorViewList", async (req, res) => {
         return res.status(200).json({
             message: "success",
             data: patients
+        })
+    }
+    else{
+        return res.status(400).json({
+            message: "doctor visibiliity"
         })
     }
     }

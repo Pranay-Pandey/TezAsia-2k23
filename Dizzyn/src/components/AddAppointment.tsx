@@ -3,6 +3,7 @@ import { makeAppointment } from "../utils/operation";
 import axios from "axios"
 
 export default function AddAppointment(props) {
+    const BASEURL = import.meta.env.VITE_API_URL;
     let form = props.form
     const [newDiagnosis, setNewDiagnosis] = React.useState({
         doctorAadhar: "",
@@ -30,7 +31,7 @@ export default function AddAppointment(props) {
   
         console.log(data)
         
-        const url =  'https://efficacious-writing-production.up.railway.app/api/makeAppointment'
+        const url =  BASEURL+'/makeAppointment';
         let config = {
           maxBodyLength: Infinity,
           headers: { 

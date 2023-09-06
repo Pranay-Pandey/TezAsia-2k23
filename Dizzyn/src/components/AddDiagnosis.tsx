@@ -3,6 +3,7 @@ import { addRecord } from "../utils/operation";
 import axios from "axios";
 
 export default function NewDiagnosisForm(props) {
+    const BASEURL = import.meta.env.VITE_API_URL;
     let form = props.form
     const [newDiagnosis, setNewDiagnosis] = React.useState({
         diagnosis: "", 
@@ -36,7 +37,7 @@ export default function NewDiagnosisForm(props) {
   
         console.log(data)
         
-        const url =  'https://efficacious-writing-production.up.railway.app/api/makeDiagnosis'
+        const url =  BASEURL+'/makeDiagnosis';
         let config = {
           maxBodyLength: Infinity,
           headers: { 

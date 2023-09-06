@@ -7,7 +7,6 @@ import { useNavigate } from 'react-router-dom';
 
 const Sidebar = () => {
   const menuItems = [
-    { icon: FaHome, label: 'Home',link:'/patient_home' },
     { icon: FaUser, label: 'Profile', link:'/patient_profile'},
     { icon: FaUser, label: 'Show Diagnosis',link:'/patient_home' },
     { icon: FaUser, label: 'Add Diagnosis',link:'/patient_adddiag' },

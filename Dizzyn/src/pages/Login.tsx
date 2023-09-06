@@ -27,6 +27,7 @@ import {useNavigate} from 'react-router-dom'
 const { toast, ToastContainer } = createStandaloneToast();
 
 export default function SignupCard() {
+    const BASEURL = import.meta.env.VITE_API_URL;
     const [form, setForm] = useState({
         aadhar: '',
         privateKey:''
@@ -50,7 +51,7 @@ export default function SignupCard() {
             ...prev, 
             privateKey: form.privateKey.replace(/\\n/g, '\n')
         }))
-        const url = 'https://efficacious-writing-production.up.railway.app/api/login'
+        const url = BASEURL+'/login';
         let config = {
             maxBodyLength: Infinity, 
             headers: {
@@ -64,7 +65,8 @@ export default function SignupCard() {
         const {message, name, age, sex, aadhar, token} = response.data;
         setSessionLogin("true");
         setSessionToken(token);
-        setSessionUser(JSON.stringify({name,age,sex,aadhar}))
+        let privateKey = form.privateKey;
+        setSessionUser(JSON.stringify({name,age,sex,aadhar,privateKey}))
         navigate('/patient_home')
         window.location.reload();
 

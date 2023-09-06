@@ -26,6 +26,7 @@ import { useSessionStorage } from '../utils/useSessionStorage';
 const { toast, ToastContainer } = createStandaloneToast();
 
 export default function PatientAppointment() {
+    const BASEURL = import.meta.env.VITE_API_URL;
     const [user, setUser] = useSessionStorage('user', JSON.stringify({}));
     const thisuser = JSON.parse(user);
     const [mock, setMock] = useState([])
@@ -33,7 +34,7 @@ export default function PatientAppointment() {
 
     useEffect(() => {
         async function fetchData() {
-            const response = await axios.get("https://efficacious-writing-production.up.railway.app/api/DoctorList");
+            const response = await axios.get(BASEURL+"/DoctorList");
             setMock(response.data.data);
         }
         fetchData();
@@ -42,7 +43,7 @@ export default function PatientAppointment() {
     const [newDiagnosis, setNewDiagnosis] = useState({
         name: thisuser.name,
         aadhar: thisuser.aadhar,
-        privateKey: "",
+        privateKey: thisuser.privateKey,
         doctorAadhar: "",
         symptoms: "",
     })
@@ -79,7 +80,7 @@ export default function PatientAppointment() {
             privateKey: prev.privateKey.replace(/\\n/g, '\n')
         }))
         
-        const url =  'https://efficacious-writing-production.up.railway.app/api/makeAppointment'
+        const url =  BASEURL+'/makeAppointment'
         let config = {
           maxBodyLength: Infinity,
           headers: { 
@@ -153,11 +154,11 @@ export default function PatientAppointment() {
                         boxShadow={'lg'}
                         p={8}>
                         <Stack spacing={4}>
-                            <FormControl id="privatekey" isRequired>
+                            {/* <FormControl id="privatekey" isRequired>
                                 <FormLabel>Enter your private key</FormLabel>
                                 <Input type="text" name="privateKey"
                                     value={newDiagnosis.privateKey} onChange={handleChange} />
-                            </FormControl>
+                            </FormControl> */}
 
                             <FormControl id="doctor" isRequired>
                             <FormLabel>Doctor</FormLabel>

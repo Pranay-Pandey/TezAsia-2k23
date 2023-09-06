@@ -30,20 +30,23 @@ interface IItem {
 }
 
 export default function DoctorView() {
-  const [docForm, setDocForm] = useState({
-    privateKey: "",
-  });
+  const BASEURL = import.meta.env.VITE_API_URL;
+  
 
   const [user, setUser] = useSessionStorage("user", JSON.stringify({}));
   const User = JSON.parse(user);
 
-  const { aadhar, ...rest } = User;
+  const { aadhar, privateKey, ...rest } = User;
+
+  const [docForm, setDocForm] = useState({
+    privateKey: privateKey,
+  });
 
   const [UserDiagnosis, setUserDiagnosis] = useState([]);
 
   async function getDiagnosis() {
     const response = await axios.post(
-      "https://efficacious-writing-production.up.railway.app/api/getDoctorViewList",
+      BASEURL+"/getDoctorViewList",
       {
         aadhar,
         privateKey: docForm.privateKey.replace(/\\n/g, "\n"),
@@ -80,7 +83,7 @@ console.log(patientDiagnosis);
   async function oneDiagnosis(item) {
     console.log(item);
     const response = await axios.post(
-      "https://efficacious-writing-production.up.railway.app/api/doctorViewDiagnosis",
+      BASEURL+"/doctorViewDiagnosis",
       {
         aadhar: item.Aadhar,
         privateKey: docForm.privateKey.replace(/\\n/g, "\n"),
@@ -136,7 +139,7 @@ console.log(patientDiagnosis);
           p={8}
         >
           <Stack spacing={4}>
-            <FormControl id="privateKey" isRequired>
+            {/* <FormControl id="privateKey" isRequired>
               <FormLabel>Enter your private key</FormLabel>
               <Input
                 type="text"
@@ -145,7 +148,7 @@ console.log(patientDiagnosis);
                 value={docForm.privateKey}
                 onChange={(e) => change(e)}
               />
-            </FormControl>
+            </FormControl> */}
             <Button
               loadingText="Submitting"
               size="lg"

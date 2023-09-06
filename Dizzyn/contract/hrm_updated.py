@@ -109,9 +109,7 @@ def main():
             assert self.data.patient_info.contains(param.patientAadhar), "No patient found"
             assert self.data.doc_info.contains(param.doctorAadhar), "No doctor found"
             assert self.data.doc_visibility.contains(param.doctorAadhar), "Doctor does not have access"
-            # assert self.data.doc_visibility.contains[param.doctorAadhar].contains(param.patientAadhar), "Doctor does not have access"
-            # assert self.data.doc_visibility.contains[param.doctorAadhar][param.patientAadhar]!="", "Doctor does not have access"
-
+            
             self.data.doc_visibility[param.doctorAadhar][param.patientAadhar] =""
 
             self.data.patient_visibility[param.patientAadhar][param.doctorAadhar] = "0"

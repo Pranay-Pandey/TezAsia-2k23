@@ -31,6 +31,7 @@ import { useSessionStorage } from '../utils/useSessionStorage';
 const { toast, ToastContainer } = createStandaloneToast();
 
 export default function PatientAddDiag() {
+    const BASEURL = import.meta.env.VITE_API_URL;
     const [user, setUser] = useSessionStorage('user', JSON.stringify({}));
     const thisuser = JSON.parse(user);
 
@@ -43,7 +44,7 @@ export default function PatientAddDiag() {
     const [newDiagnosis, setNewDiagnosis] = useState({
         name: thisuser.name,
         aadhar: thisuser.aadhar,
-        privateKey: "",
+        privateKey: thisuser.privateKey,
         diagnosis: "",
         docType: "",
         doctorName: "",
@@ -78,7 +79,7 @@ export default function PatientAddDiag() {
     const handleSubmit = async (event) => {
         event.preventDefault()
 
-        const url = 'https://efficacious-writing-production.up.railway.app/api/makeDiagnosis'
+        const url = BASEURL+'/makeDiagnosis'
         let config = {
             maxBodyLength: Infinity,
             headers: {
@@ -142,7 +143,7 @@ export default function PatientAddDiag() {
             formData.append('document', selectedFile);
 
             try {
-                const response = await axios.post('https://efficacious-writing-production.up.railway.app/api/upload', formData, {
+                const response = await axios.post(BASEURL+'/upload', formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data',
                     },
@@ -181,11 +182,11 @@ export default function PatientAddDiag() {
                         boxShadow={'lg'}
                         p={8}>
                         <Stack spacing={4}>
-                            <FormControl id="privatekey" isRequired>
+                            {/* <FormControl id="privatekey" isRequired>
                                 <FormLabel>Enter your private key</FormLabel>
                                 <Input type="text" name="privateKey"
                                     value={newDiagnosis.privateKey} onChange={handleChange} />
-                            </FormControl>
+                            </FormControl> */}
 
                             <FormControl id="diagnosis" isRequired>
                                 <FormLabel>Diagnosis Subject</FormLabel>

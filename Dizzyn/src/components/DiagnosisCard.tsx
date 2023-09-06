@@ -1,5 +1,7 @@
 import { Stack, Text, Button } from '@chakra-ui/react'
-import {BsGenderFemale, BsGenderMale, BsGenderAmbiguous} from 'react-icons/bs'
+import {BsGenderFemale, BsGenderMale, BsGenderAmbiguous} from 'react-icons/bs';
+
+import { useSessionStorage } from "../utils/useSessionStorage";
 
 interface ICardProps {
     docType:string, document:string, symptoms:string,
@@ -9,6 +11,11 @@ interface ICardProps {
 
 export default function DiagnosisCard({viewEdit, docType, document,
    symptoms, diagnosis, doctorName, patientName, upload}:ICardProps) {
+
+  const [user, setUser] = useSessionStorage("user", JSON.stringify({}));
+  const User = JSON.parse(user);
+
+  const { name } = User;
 
   return (
     <Stack p="4" boxShadow="lg" m="4" borderRadius="sm" maxW={'20vw'} 
@@ -33,10 +40,10 @@ export default function DiagnosisCard({viewEdit, docType, document,
           Document: {document} &nbsp;
         </Text>  
         {upload && <Stack direction={{ base: 'column', md: 'row' }}>
-          <Button variant="outline" colorScheme="green"
+          {doctorName==name && diagnosis==="" && <Button variant="outline" colorScheme="green"
           onClick={viewEdit} >
             Edit to upload
-          </Button>
+          </Button>}
         </Stack>}
       </Stack>
     </Stack>

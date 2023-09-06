@@ -11,7 +11,7 @@ import Card from "../components/Card";
 import { controlVisibility } from '../utils/operation'
 
 const PatientHome = () => {
-
+  const BASEURL = import.meta.env.VITE_API_URL;
   const [searchFilter, setSearchFilter] = useState('doctorName'); // Default filter
   const [searchQuery, setSearchQuery] = useState('');
   const [data, setData] = useState([]);
@@ -25,7 +25,7 @@ const PatientHome = () => {
 
   const [key, setKey] = useState({
     aadhar: thisuser.aadhar,
-    privateKey: ''
+    privateKey: thisuser.privateKey
   })
 
   useEffect(() => {
@@ -47,7 +47,7 @@ const PatientHome = () => {
           privateKey: key.privateKey.replace(/\\n/g, '\n')
         }
       ))
-      const response = await axios.post("https://efficacious-writing-production.up.railway.app/api/get_diagnosis", key, config);
+      const response = await axios.post(BASEURL+"/get_diagnosis", key, config);
 
       const { message, data, doctorAccess, hashedAadhar } = response.data;
       console.log("doctorAccess: ", doctorAccess)
@@ -92,12 +92,12 @@ const PatientHome = () => {
             <Heading fontSize={'4xl'} textAlign={'center'}>
               All Diagnosis
             </Heading>
-            <FormControl id="key" isRequired>
+            {/* <FormControl id="key" isRequired>
               <FormLabel>Enter your private key</FormLabel>
               <Input type="text" onChange={(e) => {
                 setKey(prev => ({ ...prev, privateKey: e.target.value }))
               }} />
-            </FormControl>
+            </FormControl> */}
             <Button
               loadingText="Submitting"
               size="lg"

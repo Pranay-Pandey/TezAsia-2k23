@@ -6,14 +6,14 @@ import { useSessionStorage } from '../utils/useSessionStorage';
 import { updateDiagnosis } from '../utils/operation';
 
 const EditDiagnosis = ({user, diag}) => {
-
+    const BASEURL = import.meta.env.VITE_API_URL;
     const [doctor, setDoctor] = useSessionStorage("user", JSON.stringify({}));
     const Doctor = JSON.parse(doctor);
     const [form,setForm]=useState({
         docType:'',
         document:'',
         diagnosis:'',
-        privateKey:''
+        privateKey: Doctor.privateKey
     })
 
     const [selectedFile, setSelectedFile] = useState(null);
@@ -30,7 +30,7 @@ const EditDiagnosis = ({user, diag}) => {
             formData.append('document', selectedFile);
 
             try {
-                const response = await axios.post('https://efficacious-writing-production.up.railway.app/api/upload', formData, {
+                const response = await axios.post(BASEURL+'/upload', formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data',
                     },
@@ -45,7 +45,7 @@ const EditDiagnosis = ({user, diag}) => {
                     };
                     
                     const res2 = await axios.post(
-                        "https://efficacious-writing-production.up.railway.app/api/updateDiagnosis",
+                        BASEURL+"/updateDiagnosis",
                         {
                             encryptionKey: user.aesEncryption,
                             privateKey: form.privateKey.replace(/\\n/g, "\n"),
@@ -82,7 +82,7 @@ const EditDiagnosis = ({user, diag}) => {
             };
             
             const res2 = await axios.post(
-                "https://efficacious-writing-production.up.railway.app/api/updateDiagnosis",
+                BASEURL+"/updateDiagnosis",
                 {
                     encryptionKey: user.aesEncryption,
                     privateKey: form.privateKey.replace(/\\n/g, "\n"),
@@ -143,12 +143,12 @@ const EditDiagnosis = ({user, diag}) => {
                                     setForm(prev => ({ ...prev, diagnosis: e.target.value }))
                                 }} />
                             </FormControl>
-                            <FormControl id="privatekey" isRequired>
+                            {/* <FormControl id="privatekey" isRequired>
                                 <FormLabel>Enter your private key</FormLabel>
-                                <Input type="text" onChange={(e) => {
+                                <Input type="text" value={form.privateKey} onChange={(e) => {
                                     setForm(prev => ({ ...prev, privateKey: e.target.value }))
                                 }} />
-                            </FormControl>
+                            </FormControl> */}
                    
                     <Stack spacing={10} pt={2}>
                         <Button

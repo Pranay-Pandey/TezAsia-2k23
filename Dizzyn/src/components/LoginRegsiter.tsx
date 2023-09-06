@@ -3,7 +3,7 @@ import {addPatient} from '../utils/operation';
 import axios from "axios";
 
 const LoginRegister = (props)=>{
-
+    const BASEURL = import.meta.env.VITE_API_URL;
     let form = props.form;
     let setForm = props.setForm;
 
@@ -47,7 +47,7 @@ const LoginRegister = (props)=>{
 
       console.log(data)
       
-      const url =  'https://efficacious-writing-production.up.railway.app/api/login'
+      const url =  BASEURL+'/login'
       let config = {
         maxBodyLength: Infinity,
         headers: { 
@@ -98,7 +98,7 @@ const LoginRegister = (props)=>{
       let config = {
         method: 'post',
         maxBodyLength: Infinity,
-        url: 'https://efficacious-writing-production.up.railway.app/api/register',
+        url: BASEURL+'/register',
         headers: { 
           'Content-Type': 'application/json'
         },

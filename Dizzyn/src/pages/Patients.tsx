@@ -11,7 +11,7 @@ import AddAppointment from "../components/AddAppointment";
 
 export default function Patients() {
   // const [loggedIn, setLoggedIn] = useState(true);
-
+  const BASEURL = import.meta.env.VITE_API_URL;
   const [loggedIn, setLoggedIn] = useState(false);
   const [diagnosisElements, setDiagnosisElements] = useState([]);
   const [viewState, setViewState] = useState(3);
@@ -26,7 +26,7 @@ export default function Patients() {
   const diagnosisList = async () => {
     if (loggedIn === true) {
       try {
-        const response = await axios.post("https://efficacious-writing-production.up.railway.app/api/getDiagnostic", {
+        const response = await axios.post(BASEURL+"/getDiagnostic", {
           aadhar: form.aadhar,
         });
 
