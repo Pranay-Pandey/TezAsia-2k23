@@ -15,6 +15,7 @@ people of all ages. Do not answer any questions strictly which include anything 
 }
 
 function Chatbot() {
+    console.log("API KEY = ", API_KEY)
     const [collapsed, setCollapsed] = useState(true);
     const [messages, setMessages] = useState([
         {

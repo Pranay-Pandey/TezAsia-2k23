@@ -172,13 +172,13 @@ console.log(patientDiagnosis);
       <Heading fontSize={'2xl'} textAlign={'center'}>
       All Diagnosis of {(selectedUser as any).name}
       </Heading>
-      <Stack spacing={4} style={{ flex: 1, flexDirection: "row" }}>
+      <Flex overflowX="auto">
         {patientDiagnosis.map(item=>{return(<>
           <DiagnosisCard docType={item.data.docType} document={item.data.document} symptoms={item.data.symptoms}
                 diagnosis={item.data.diagnosis} doctorName={item.data.doctorName} patientName={item.data.patientName} 
                 viewEdit={() => viewEdit(item)} upload={true}/>
         </>)})}
-        </Stack>
+        </Flex>
       </Stack>:""}
       <Stack spacing={8} maxW={"100vw"} px={6}>
       <Heading fontSize={'4xl'} textAlign={'center'}>
